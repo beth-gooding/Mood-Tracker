@@ -10,11 +10,7 @@ const BottomTabs = createBottomTabNavigator<BottomTabsParamList>();
 export const BottomTabsNavigator: React.FC = () => {
   return (
     <BottomTabs.Navigator>
-      <BottomTabs.Screen
-        name="HomeTab"
-        component={HomeTab}
-        options={{ headerShown: false }}
-      />
+      <BottomTabs.Screen name="HomeTab" component={HomeTab} />
       <BottomTabs.Screen name="HistoryTab" component={HistoryTab} />
       <BottomTabs.Screen name="AnalyticsTab" component={AnalyticsTab} />
     </BottomTabs.Navigator>
