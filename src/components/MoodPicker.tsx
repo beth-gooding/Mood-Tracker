@@ -11,15 +11,41 @@ const moodOptions = [
   { emoji: '😭', description: 'miserable' },
 ];
 
-export const MoodPicker = () => {
+type MoodPickerProps = {
+  onAddMood: (newMood: MoodOption) => void;
+};
+
+export const MoodPicker: React.FC<MoodPickerProps> = ({ onAddMood }) => {
   const [selectedOption, setSelectedOption] = React.useState<MoodOption>();
-  console.warn(selectedOption);
+  const [hasAdded, setHasAdded] = React.useState(false);
+
+  const handleAddMood = React.useCallback(() => {
+    if (selectedOption) {
+      onAddMood(selectedOption);
+      setHasAdded(true);
+      setSelectedOption(undefined);
+    }
+  }, [selectedOption, onAddMood]);
+
+  if (hasAdded) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.titleText}>Thank you!</Text>
+        <View style={styles.emojiList} />
+        <TouchableOpacity
+          style={styles.chooseBtn}
+          onPress={() => setHasAdded(false)}>
+          <Text style={styles.btnText}>Add another</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
   return (
-    <View style={styles.emojiBox}>
+    <View style={styles.container}>
       <Text style={styles.titleText}>How are you right now?</Text>
       <View style={styles.emojiList}>
         {moodOptions.map(option => (
-          <View>
+          <View key={option.description}>
             <TouchableOpacity
               style={[
                 styles.moodItem,
@@ -36,7 +62,7 @@ export const MoodPicker = () => {
           </View>
         ))}
       </View>
-      <TouchableOpacity style={styles.chooseBtn}>
+      <TouchableOpacity style={styles.chooseBtn} onPress={handleAddMood}>
         <Text style={styles.btnText}>Choose</Text>
       </TouchableOpacity>
     </View>
@@ -50,7 +76,8 @@ const styles = StyleSheet.create({
   emojiList: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20,
+    paddingHorizontal: 20,
+    marginBottom: 10,
   },
   moodItem: {
     width: 50,
@@ -76,7 +103,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#454C73',
   },
-  emojiBox: {
+  container: {
     borderColor: '#8D94BA',
     borderWidth: 2,
     borderRadius: 10,
@@ -91,6 +118,7 @@ const styles = StyleSheet.create({
     width: 150,
     alignSelf: 'center',
     padding: 10,
+    marginBottom: 10,
   },
   btnText: {
     color: 'white',

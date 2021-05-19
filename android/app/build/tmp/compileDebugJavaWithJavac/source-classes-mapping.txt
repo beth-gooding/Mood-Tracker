@@ -1,0 +1,15 @@
+com/moodtracker/MainApplication.java
+ com.moodtracker.MainApplication
+ com.moodtracker.MainApplication$1
+com/moodtracker/ReactNativeFlipper.java
+ com.moodtracker.ReactNativeFlipper
+ com.moodtracker.ReactNativeFlipper$1
+ com.moodtracker.ReactNativeFlipper$2
+ com.moodtracker.ReactNativeFlipper$2$1
+com/moodtracker/BuildConfig.java
+ com.moodtracker.BuildConfig
+com/moodtracker/MainActivity.java
+ com.moodtracker.MainActivity
+ com.moodtracker.MainActivity$1
+com/facebook/react/PackageList.java
+ com.facebook.react.PackageList
