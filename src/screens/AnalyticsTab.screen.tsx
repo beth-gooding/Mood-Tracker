@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-export const OtherTab: React.FC = () => {
+export const AnalyticsTab = () => {
   return (
     <View style={styles.container}>
-      <Text>Other Bottom Tab</Text>
+      <Text>Analytics Tab</Text>
     </View>
   );
 };

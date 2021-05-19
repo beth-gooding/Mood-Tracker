@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-export const HomeTabSecondPage: React.FC = () => {
+export const HomeTab = () => {
   return (
     <View style={styles.container}>
-      <Text>Second Page</Text>
+      <Text>Home Tab</Text>
     </View>
   );
 };

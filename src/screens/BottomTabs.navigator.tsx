@@ -1,8 +1,9 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabsParamList } from '~src/types';
-import { HomeTabNavigator } from './HomeTab.navigator';
-import { OtherTab } from './OtherTab.screen';
+import { HomeTab } from './HomeTab.screen';
+import { HistoryTab } from './HistoryTab.screen';
+import { AnalyticsTab } from './AnalyticsTab.screen';
 
 const BottomTabs = createBottomTabNavigator<BottomTabsParamList>();
 
@@ -11,10 +12,11 @@ export const BottomTabsNavigator: React.FC = () => {
     <BottomTabs.Navigator>
       <BottomTabs.Screen
         name="HomeTab"
-        component={HomeTabNavigator}
+        component={HomeTab}
         options={{ headerShown: false }}
       />
-      <BottomTabs.Screen name="OtherTab" component={OtherTab} />
+      <BottomTabs.Screen name="HistoryTab" component={HistoryTab} />
+      <BottomTabs.Screen name="AnalyticsTab" component={AnalyticsTab} />
     </BottomTabs.Navigator>
   );
 };
