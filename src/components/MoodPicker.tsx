@@ -15,22 +15,30 @@ export const MoodPicker = () => {
   const [selectedOption, setSelectedOption] = React.useState<MoodOption>();
   console.warn(selectedOption);
   return (
-    <View style={styles.emojiList}>
-      {moodOptions.map(option => (
-        <View>
-          <TouchableOpacity
-            style={[
-              styles.moodItem,
-              selectedOption?.emoji === option.emoji ? styles.selected : null,
-            ]}
-            onPress={() => setSelectedOption(option)}>
-            <Text style={styles.emojiText}>{option.emoji}</Text>
-          </TouchableOpacity>
-          <Text style={styles.descriptionText}>
-            {selectedOption?.emoji === option.emoji ? option.description : null}
-          </Text>
-        </View>
-      ))}
+    <View style={styles.emojiBox}>
+      <Text style={styles.titleText}>How are you right now?</Text>
+      <View style={styles.emojiList}>
+        {moodOptions.map(option => (
+          <View>
+            <TouchableOpacity
+              style={[
+                styles.moodItem,
+                selectedOption?.emoji === option.emoji ? styles.selected : null,
+              ]}
+              onPress={() => setSelectedOption(option)}>
+              <Text style={styles.emojiText}>{option.emoji}</Text>
+            </TouchableOpacity>
+            <Text style={styles.descriptionText}>
+              {selectedOption?.emoji === option.emoji
+                ? option.description
+                : null}
+            </Text>
+          </View>
+        ))}
+      </View>
+      <TouchableOpacity style={styles.chooseBtn}>
+        <Text style={styles.btnText}>Choose</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -61,5 +69,31 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: 'bold',
     color: '#454C73',
+  },
+  titleText: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#454C73',
+  },
+  emojiBox: {
+    borderColor: '#8D94BA',
+    borderWidth: 2,
+    borderRadius: 10,
+    marginHorizontal: 10,
+    backgroundColor: '#D5EAEC',
+    paddingVertical: 10,
+  },
+  chooseBtn: {
+    backgroundColor: '#8D94BA',
+    alignItems: 'center',
+    borderRadius: 50,
+    width: 150,
+    alignSelf: 'center',
+    padding: 10,
+  },
+  btnText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
