@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     backgroundColor: '#D5EAEC',
     paddingVertical: 10,
+    marginBottom: 10,
   },
   chooseBtn: {
     backgroundColor: '#8D94BA',
