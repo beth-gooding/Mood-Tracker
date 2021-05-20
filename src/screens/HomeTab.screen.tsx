@@ -2,6 +2,9 @@ import React from 'react';
 import { StyleSheet, Image, ImageBackground } from 'react-native';
 import { MoodPicker } from '~src/components/MoodPicker';
 import { useAppContext } from '~src/App.provider';
+import { HomeIcon } from '~src/components/Home.icon';
+import { ListIcon } from '~src/components/List.Icon';
+import { AnalyticsIcon } from '~src/components/Analytics.icon';
 
 const imageSrc = require('~src/assets/images/ying-yang.png');
 const networkImageUrl =
@@ -19,8 +22,10 @@ export const HomeTab = () => {
         style={styles.image}
         accessibilityLabel="ying-yang icon"
       />
-
       <MoodPicker onAddMood={handleAddMood} />
+      <HomeIcon color="orange" size={100} />
+      <ListIcon color="blue" size={30} />
+      <AnalyticsIcon color="green" size={60} />
     </ImageBackground>
   );
 };
