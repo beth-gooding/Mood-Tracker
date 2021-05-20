@@ -94,13 +94,13 @@ const styles = StyleSheet.create({
   descriptionText: {
     textAlign: 'center',
     fontSize: 10,
-    fontWeight: 'bold',
+    fontFamily: 'Kalam-Bold',
     color: '#454C73',
   },
   titleText: {
     textAlign: 'center',
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'Kalam-Bold',
     color: '#454C73',
   },
   container: {
@@ -123,6 +123,6 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: 'white',
-    fontWeight: 'bold',
+    fontFamily: 'Kalam-Bold',
   },
 });

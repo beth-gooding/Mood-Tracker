@@ -31,6 +31,7 @@ export const BottomTabsNavigator: React.FC = () => {
 
             return null;
           },
+          headerTitleStyle: { fontFamily: 'Kalam-Bold' },
         };
       }}>
       <BottomTabs.Screen

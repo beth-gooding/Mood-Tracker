@@ -39,12 +39,13 @@ const styles = StyleSheet.create({
   },
   moodDescription: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'Kalam-Bold',
     color: '#454C73',
   },
   dateText: {
     color: '#8D94BA',
     textAlign: 'center',
+    fontFamily: 'Kalam-Regular',
   },
   iconAndDescription: {
     flexDirection: 'row',
