@@ -2,12 +2,19 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { MoodOptionWithTimeStamp } from '~src/types';
 import format from 'date-fns/format';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useAppContext } from '~src/App.provider';
 
 type MoodItemRowProps = {
   mood: MoodOptionWithTimeStamp;
 };
 
 export const MoodItemRow: React.FC<MoodItemRowProps> = ({ mood }) => {
+  const { handleRemoveMood } = useAppContext();
+  // const handleDelete = React.useCallback (() => {
+  //   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+  //   useAppContext.handleRemoveMood(mood);
+  // }, [mood]);
   return (
     <View style={styles.moodItem}>
       <View style={styles.iconAndDescription}>
@@ -19,6 +26,12 @@ export const MoodItemRow: React.FC<MoodItemRowProps> = ({ mood }) => {
       <Text style={styles.dateText} key={mood.timestamp}>
         {format(new Date(mood.timestamp), "d. MMM, yyyy 'at' h:mmaaa")}
       </Text>
+      <TouchableOpacity
+        onPress={() => {
+          handleRemoveMood(mood);
+        }}>
+        <Text style={styles.deleteText}>delete</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -50,5 +63,10 @@ const styles = StyleSheet.create({
   iconAndDescription: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  deleteText: {
+    fontSize: 18,
+    fontFamily: 'Kalam-Bold',
+    color: '#1D84B5',
   },
 });

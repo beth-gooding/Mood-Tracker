@@ -93,9 +93,10 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     textAlign: 'center',
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: 'Kalam-Bold',
     color: '#454C73',
+    height: 15,
   },
   titleText: {
     textAlign: 'center',
