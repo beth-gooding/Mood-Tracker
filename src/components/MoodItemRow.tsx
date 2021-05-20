@@ -1,10 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { LayoutAnimation, StyleSheet, Text, View } from 'react-native';
 import { MoodOptionWithTimeStamp } from '~src/types';
 import format from 'date-fns/format';
 import {
   PanGestureHandlerGestureEvent,
+  PanGestureHandlerStateChangeEvent,
   TouchableOpacity,
+  State as GestureState,
 } from 'react-native-gesture-handler';
 import { useAppContext } from '~src/App.provider';
 import { PanGestureHandler } from 'react-native-gesture-handler';
@@ -21,23 +23,43 @@ type MoodItemRowProps = {
 export const MoodItemRow: React.FC<MoodItemRowProps> = ({ mood }) => {
   const { handleRemoveMood } = useAppContext();
   const offset = useSharedValue(0);
+  const maxPan = 80;
+  const [isToDelete, setIsToDelete] = React.useState(false);
   const animatedStyles = useAnimatedStyle(() => ({
     transform: [{ translateX: offset.value }],
   }));
-  // const handleDelete = React.useCallback (() => {
-  //   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-  //   useAppContext.handleRemoveMood(mood);
-  // }, [mood]);
+  const handleDelete = React.useCallback(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    handleRemoveMood(mood);
+  }, [mood, handleRemoveMood]);
   const onGestureEvent = React.useCallback(
     (event: PanGestureHandlerGestureEvent) => {
       const xVal = Math.floor(event.nativeEvent.translationX);
       offset.value = xVal;
+      if (Math.abs(xVal) <= maxPan) {
+        setIsToDelete(false);
+      } else {
+        setIsToDelete(true);
+      }
     },
     [offset],
   );
-  const onHandlerStateChange = React.useCallback(() => {
-    offset.value = withTiming(0);
-  }, [offset]);
+  const onHandlerStateChange = React.useCallback(
+    (event: PanGestureHandlerStateChangeEvent) => {
+      if (event.nativeEvent.state === GestureState.END) {
+        if (isToDelete) {
+          offset.value = withTiming(Math.sign(offset.value) * 2000);
+          LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+          setTimeout(() => {
+            handleRemoveMood(mood);
+          }, 250);
+        } else {
+          offset.value = withTiming(0);
+        }
+      }
+    },
+    [offset, isToDelete, handleRemoveMood, mood],
+  );
   return (
     <PanGestureHandler
       minDeltaX={1}
@@ -56,7 +78,7 @@ export const MoodItemRow: React.FC<MoodItemRowProps> = ({ mood }) => {
         </Text>
         <TouchableOpacity
           onPress={() => {
-            handleRemoveMood(mood);
+            handleDelete();
           }}>
           <Text style={styles.deleteText}>delete</Text>
         </TouchableOpacity>
