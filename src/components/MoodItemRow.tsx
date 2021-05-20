@@ -2,8 +2,17 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { MoodOptionWithTimeStamp } from '~src/types';
 import format from 'date-fns/format';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  PanGestureHandlerGestureEvent,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 import { useAppContext } from '~src/App.provider';
+import { PanGestureHandler } from 'react-native-gesture-handler';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 type MoodItemRowProps = {
   mood: MoodOptionWithTimeStamp;
@@ -11,28 +20,48 @@ type MoodItemRowProps = {
 
 export const MoodItemRow: React.FC<MoodItemRowProps> = ({ mood }) => {
   const { handleRemoveMood } = useAppContext();
+  const offset = useSharedValue(0);
+  const animatedStyles = useAnimatedStyle(() => ({
+    transform: [{ translateX: offset.value }],
+  }));
   // const handleDelete = React.useCallback (() => {
   //   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
   //   useAppContext.handleRemoveMood(mood);
   // }, [mood]);
+  const onGestureEvent = React.useCallback(
+    (event: PanGestureHandlerGestureEvent) => {
+      const xVal = Math.floor(event.nativeEvent.translationX);
+      offset.value = xVal;
+    },
+    [offset],
+  );
+  const onHandlerStateChange = React.useCallback(() => {
+    offset.value = withTiming(0);
+  }, [offset]);
   return (
-    <View style={styles.moodItem}>
-      <View style={styles.iconAndDescription}>
-        <Text style={styles.moodValue}>{mood.moodOption.emoji}</Text>
-        <Text style={styles.moodDescription}>
-          {mood.moodOption.description}
+    <PanGestureHandler
+      minDeltaX={1}
+      minDeltaY={100}
+      onGestureEvent={onGestureEvent}
+      onHandlerStateChange={onHandlerStateChange}>
+      <Animated.View style={[styles.moodItem, animatedStyles]}>
+        <View style={styles.iconAndDescription}>
+          <Text style={styles.moodValue}>{mood.moodOption.emoji}</Text>
+          <Text style={styles.moodDescription}>
+            {mood.moodOption.description}
+          </Text>
+        </View>
+        <Text style={styles.dateText} key={mood.timestamp}>
+          {format(new Date(mood.timestamp), "d. MMM, yyyy 'at' h:mmaaa")}
         </Text>
-      </View>
-      <Text style={styles.dateText} key={mood.timestamp}>
-        {format(new Date(mood.timestamp), "d. MMM, yyyy 'at' h:mmaaa")}
-      </Text>
-      <TouchableOpacity
-        onPress={() => {
-          handleRemoveMood(mood);
-        }}>
-        <Text style={styles.deleteText}>delete</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          onPress={() => {
+            handleRemoveMood(mood);
+          }}>
+          <Text style={styles.deleteText}>delete</Text>
+        </TouchableOpacity>
+      </Animated.View>
+    </PanGestureHandler>
   );
 };
 
