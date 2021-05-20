@@ -23,9 +23,9 @@ export const HomeTab = () => {
         accessibilityLabel="ying-yang icon"
       />
       <MoodPicker onAddMood={handleAddMood} />
-      <HomeIcon color="orange" size={100} />
-      <ListIcon color="blue" size={30} />
-      <AnalyticsIcon color="green" size={60} />
+      <HomeIcon color="purple" size={100} />
+      <ListIcon color="blue" size={70} />
+      <AnalyticsIcon color="orangered" size={60} />
     </ImageBackground>
   );
 };
